@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import CreateForm from "./pages/CreateForm";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/create" element={<CreateForm />}/>
       </Routes>
     </ThemeProvider>
   );
