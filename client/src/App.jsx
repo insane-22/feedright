@@ -5,6 +5,8 @@ import { ThemeProvider } from "./components/ui/theme-provider";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import CreateForm from "./pages/CreateForm";
+import PublicForm from "./pages/PublicForm";
+import ThankYouPage from "./pages/ThankYouPage";
 
 function App() {
   return (
@@ -16,6 +18,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
 
         <Route path="/create" element={<CreateForm />}/>
+        <Route path="/forms/:formId" element={<PublicForm />} />
+        <Route path="/thankyou/:formId" element={<ThankYouPage />} />
+
       </Routes>
     </ThemeProvider>
   );

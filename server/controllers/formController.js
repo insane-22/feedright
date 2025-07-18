@@ -1,7 +1,8 @@
+import mongoose from "mongoose";
 import formModel from "../models/Form.js";
 
 export const createFormController = async (req, res) => {
-  const { title, questions } = req.body;
+  const { title, questions, description, thankYouMessage } = req.body;
 
   if (!title || !questions || questions.length < 3 || questions.length > 5) {
     return res.status(400).send({
@@ -15,6 +16,8 @@ export const createFormController = async (req, res) => {
       adminId: req.admin._id,
       title,
       questions,
+      description,
+      thankYouMessage,
     }).save();
 
     res.status(201).send({
@@ -54,7 +57,19 @@ export const getFormsController = async (req, res) => {
 
 export const getSingleFormController = async (req, res) => {
   try {
-    const form = await formModel.findOne({ _id: req.params.slug });
+    if (!mongoose.Types.ObjectId.isValid(req.params.slug)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid form ID" });
+    }
+
+    const form = await formModel.findById(req.params.slug);
+    if (!form) {
+      return res
+        .status(404)
+        .send({ success: false, message: "Form not found" });
+    }
+
     res.status(200).send({
       success: true,
       message: "Single Form Fetched",

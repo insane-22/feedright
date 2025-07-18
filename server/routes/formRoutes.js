@@ -5,12 +5,14 @@ import {
   getFormsController,
   getSingleFormController,
 } from "../controllers/formController.js";
+import { submitResponseController } from "../controllers/responseController.js";
 
 const router = express.Router();
 
 router.post("/create", requireSignIn, createFormController);
 router.get("/all", requireSignIn, getFormsController);
 
-router.get("/single/:slug", getSingleFormController)
+router.get("/single/:slug", getSingleFormController);
+router.post("/single/:slug/response", submitResponseController);
 
 export default router;

@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { useNavigate } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
@@ -17,6 +23,9 @@ const CreateForm = () => {
   const [questions, setQuestions] = useState([
     { questionText: "", type: "text", options: [] },
   ]);
+  const [description, setDescription] = useState("");
+  const [thankYouMessage, setThankYouMessage] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const handleQuestionChange = (index, field, value) => {
@@ -24,7 +33,7 @@ const CreateForm = () => {
     updated[index][field] = value;
 
     if (field === "type" && value === "text") {
-      updated[index].options = []; 
+      updated[index].options = [];
     }
     setQuestions(updated);
   };
@@ -52,7 +61,10 @@ const CreateForm = () => {
       toast.warn("Maximum 5 questions allowed");
       return;
     }
-    setQuestions([...questions, { questionText: "", type: "text", options: [] }]);
+    setQuestions([
+      ...questions,
+      { questionText: "", type: "text", options: [] },
+    ]);
   };
 
   const removeQuestion = (index) => {
@@ -78,10 +90,10 @@ const CreateForm = () => {
       setLoading(true);
       const res = await axios.post(
         `${API_URL}/form/create`,
-        { title, questions },
+        { title, questions, thankYouMessage, description },
         {
           headers: {
-            Authorization: token, 
+            Authorization: token,
           },
         }
       );
@@ -113,12 +125,30 @@ const CreateForm = () => {
               required
             />
 
+            <Input
+              type="text"
+              placeholder="Description (shown under title)"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+
+            <Input
+              type="text"
+              placeholder="Thank you message (shown after submission)"
+              value={thankYouMessage}
+              onChange={(e) => setThankYouMessage(e.target.value)}
+            />
+
             {questions.map((q, index) => (
               <div key={index} className="p-4  rounded-md border space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="font-medium">Question {index + 1}</h4>
                   {questions.length > 3 && (
-                    <Button variant="ghost" size="icon" onClick={() => removeQuestion(index)}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => removeQuestion(index)}
+                    >
                       <Trash2 className="h-4 w-4 text-red-500" />
                     </Button>
                   )}
@@ -128,13 +158,17 @@ const CreateForm = () => {
                   type="text"
                   placeholder="Enter question text"
                   value={q.questionText}
-                  onChange={(e) => handleQuestionChange(index, "questionText", e.target.value)}
+                  onChange={(e) =>
+                    handleQuestionChange(index, "questionText", e.target.value)
+                  }
                   required
                 />
 
                 <Select
                   value={q.type}
-                  onValueChange={(value) => handleQuestionChange(index, "type", value)}
+                  onValueChange={(value) =>
+                    handleQuestionChange(index, "type", value)
+                  }
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select type" />
@@ -152,7 +186,9 @@ const CreateForm = () => {
                         <Input
                           type="text"
                           value={opt}
-                          onChange={(e) => handleOptionChange(index, optIndex, e.target.value)}
+                          onChange={(e) =>
+                            handleOptionChange(index, optIndex, e.target.value)
+                          }
                           placeholder={`Option ${optIndex + 1}`}
                           className="flex-1"
                         />
@@ -166,7 +202,11 @@ const CreateForm = () => {
                         </Button>
                       </div>
                     ))}
-                    <Button type="button" onClick={() => addOption(index)} size="sm">
+                    <Button
+                      type="button"
+                      onClick={() => addOption(index)}
+                      size="sm"
+                    >
                       <Plus className="h-4 w-4 mr-1" /> Add Option
                     </Button>
                   </div>
