@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import CreateForm from "./pages/CreateForm";
 import PublicForm from "./pages/PublicForm";
 import ThankYouPage from "./pages/ThankYouPage";
+import Responses from "./pages/Responses";
 
 function App() {
   return (
@@ -17,10 +18,10 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
-        <Route path="/create" element={<CreateForm />}/>
+        <Route path="/create" element={<CreateForm />} />
         <Route path="/forms/:formId" element={<PublicForm />} />
         <Route path="/thankyou/:formId" element={<ThankYouPage />} />
-
+        <Route path="/dashboard/responses/:formId" element={<Responses />} />
       </Routes>
     </ThemeProvider>
   );

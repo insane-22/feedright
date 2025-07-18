@@ -20,7 +20,7 @@ const formSchema = new mongoose.Schema(
       {
         questionText: { type: String, required: true },
         type: { type: String, enum: ["text", "mcq"], required: true },
-        options: [String], // for MCQ only
+        options: [String], 
       },
     ],
   },
