@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { useUser } from "@/context/UserContext";
-import { ToastContainer, cssTransition, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Login = () => {
@@ -17,10 +17,6 @@ const Login = () => {
 
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
   const validatePassword = (password) => password.length >= 6;
-  const bounce = cssTransition({
-    enter: "animate__animated animate__bounceIn",
-    exit: "animate__animated animate__bounceOut",
-  });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -48,8 +44,7 @@ const Login = () => {
 
       toast.success("Login successful", {
         onClose: () => navigate("/dashboard"),
-        position: "bottom-right",
-        transition: bounce,
+        position: "bottom-right"
       });
     } catch (error) {
       return toast.error(error.response?.data?.error || "Login failed", {

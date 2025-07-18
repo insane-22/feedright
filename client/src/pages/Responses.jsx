@@ -38,8 +38,6 @@ const Responses = () => {
         questions={data.form.questions}
         responses={data.responses}
       />
-      {/* <ExportCSVButton data={data} />
-      <ResponseList questions={data.questions} responses={data.responses} /> */}
     </div>
   );
 };

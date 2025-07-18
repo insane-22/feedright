@@ -16,8 +16,10 @@ import {
 import { Button } from "@/components/ui/button";
 import Papa from "papaparse";
 import { saveAs } from "file-saver";
+import { useNavigate } from "react-router";
 
 const FormResponseChart = ({ questions, responses }) => {
+  const navigate = useNavigate();
   if (!questions.length || !responses.length) return null;
 
   const handleExport = () => {
@@ -34,9 +36,16 @@ const FormResponseChart = ({ questions, responses }) => {
     saveAs(blob, "form_responses.csv");
   };
 
+  const handleBack = () => {
+    navigate("/dashboard")
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <Button onClick={handleBack} className="mb-4">
+          Back to Dashboard
+        </Button>
         <Button onClick={handleExport} className="mb-4">
           Export All Responses (CSV)
         </Button>

@@ -16,16 +16,6 @@ const FormActions = ({ onDelete, formId, title }) => {
 
   return (
     <div className="flex justify-center space-x-2">
-      <Button
-        size="sm"
-        variant="secondary"
-        onClick={() => navigate(`/dashboard/edit/${formId}`)}
-      >
-        Edit
-      </Button>
-      <Button size="sm" variant="destructive">
-        Delete
-      </Button>
 
       <AlertDialog>
         <AlertDialogTrigger asChild>
