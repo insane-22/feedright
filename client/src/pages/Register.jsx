@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { ToastContainer, cssTransition, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -18,11 +18,6 @@ const Register = () => {
 
   const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
   const validatePassword = (password) => password.length >= 6;
-  const bounce = cssTransition({
-    enter: "animate__animated animate__bounceIn",
-    exit: "animate__animated animate__bounceOut",
-  });
-
   const handleSubmit = async (e) => {
     console.log("hi");
     e.preventDefault();
@@ -64,7 +59,6 @@ const Register = () => {
         autoClose: 4000,
         onClose: () => navigate("/login"),
         position: "bottom-right",
-        transition: bounce,
       });
     } catch (error) {
       return toast.error(error.response?.data?.error || "Login failed", {
